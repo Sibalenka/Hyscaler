@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        form {
+            width: 50%;
+            position: absolute;
+            left: 27%;
+        }
+
+        .main {
+            margin: 0 auto;
+            width: 50%;
+            max-width: 600px;
+            background-color: rgb(138, 247, 247);
+        }
+
+        div {
+            margin-bottom: 8px;
+            padding: 2px;
+        }
+
+        .btn {
+            text-align: center;
+        }
+
+        .btn1 {
+            width: 50px;
+            height: 25px;
+            border-radius: 50px;
+            background-color: rgb(30, 210, 23);
+        }
+
+        .name input,
+        .date input,
+        .gen input,
+        .email input,
+        .nationality input,
+        .address1 input,
+        .telephone-home input,
+        .telephone-mobile input {
+            width: 95%;
+        }
+
+        label.required::after {
+            content: '*';
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="registrationForm">
+        <div class="main">
+            <h2>College Registration Form</h2>
+            <h5>Thank you for applying to our college. Please fill in the form below to complete the registration
+                process for admission.</h5>
+            <div class="name">
+                <label for="fullname" class="required">Name:</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Full Name" oninput="updateNameFormat()"
+                    required />
+            </div>
+            <div id="error" class="error"></div>
+
+            <div class="date">
+                <label for="dob" class="required">Date of Birth:</label>
+                <div class="date1">
+                    <input type="text" id="dob" name="dob" placeholder="yyyy//mm/dd" oninput="validateDate()" required>
+                </div>
+            </div>
+
+            <div class="email">
+                <label for="email" class="required">Email:</label>
+                <div class="email1">
+                    <input type="email" id="email" name="email" required>
+                    <div id="emailError" style="color: red;"></div>
+                </div>
+            </div>
+
+            <div class="father">
+                <label for="fatherName" class="required">Father's Name:</label>
+                <div class="father1">
+                    <input type="text" id="fatherFirstname" name="fatherFirstname" pattern="[A-Za-z]+"
+                        placeholder="First" required />
+                    <input type="text" id="fatherLastname" name="fatherLastname" pattern="[A-Za-z]+" placeholder="Last"
+                        required />
+                </div>
+            </div>
+            <div class="mother">
+                <label for="motherName" class="required">Mother's Name:</label>
+                <div class="mother1">
+                    <input type="text" id="motherFirstname" name="motherFirstname" pattern="[A-Za-z]+"
+                        placeholder="First" required />
+                    <input type="text" id="motherLastname" name="motherLastname" pattern="[A-Za-z]+" placeholder="Last"
+                        required />
+                </div>
+                <div class="gender">
+                    <label class="required">Gender:</label>
+                    <div>
+                        <select name="gen" id="gender">
+                            <option>Select the Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                            <option>Transgender</option>
+                            <option>Prefer not to say</option>
+                        </select>
+                    </div>
+
+                </div>
+                <div class="nationality">
+                    <label for="nationality" class="required">Nationality:</label>
+                    <div class="nationality1">
+                        <input type="text" id="nationality" name="nationality" pattern="[A-Za-z]+" required>
+                    </div>
+                </div>
+                <div class="home">
+                    <label class="required">Home Address:</label>
+                    <div class="address1">
+                        <input type="text" id="streetAddress" name="streetAddress" placeholder="Street Address">
+                    </div>
+                    <div class="address2">
+                        <input type="text" id="city" name="city" placeholder="City" pattern="[A-Za-z]+" required />
+                        <input type="text" id="country" name="country" placeholder="Country" pattern="[A-Za-z]+"
+                            required />
+                    </div>
+                    <div>
+                        <input type="tel" id="pincode" name="pincode" placeholder="Pincode" maxlength="6"
+                            pattern="[0-9]{6}" 
+                            required />
+                    </div>
+                </div>
+                <div class="telephone-home">
+                    <label for="telephoneHome" class="required">Telephone-Home:</label>
+                    <div class="telephone-home1">
+                        <input type="tel" id="telephoneHome" name="telephoneHome" pattern="[6-9]{4}[0-9]{6}" maxlength="10"
+                            placeholder="### ### ####" 
+                            required />
+                    </div>
+                </div>
+                <div class="telephone-mobile">
+                    <label for="telephoneMobile" class="required">Telephone-Mobile:</label>
+                    <div class="telephone-mobile1">
+                        <input type="tel" id="telephoneMobile" name="telephoneMobile" pattern="[6-9]{4}[0-9]{6}" maxlength="10"
+                            placeholder="### ### ####"
+                            required />
+                    </div>
+                </div>
+                <div class="feedback">
+                    <label for="feedback" class="required">In a few sentences, write down why do you want to become a
+                        student of our
+                        College</label>
+                    <div class="feedback1">
+                        <textarea name="feedback" id="feedback" cols="45" rows="5"></textarea>
+                    </div>
+                </div>
+                <div class="signature">
+                    <label for="signature" class="required">Electronic Signature (Parent/Guardian):</label>
+                    <div class="sign1">
+                        <input type="text" name="signature" id="signature" 
+                        required />
+                    </div>
+                </div>
+                <div class="btn">
+                    <input class="btn1" type="submit" value="Next">
+                </div>
+            </div>
+    </form>
+    <script>
+        const form = document.getElementById("registrationForm");
+        form.addEventListener("submit", function (event) {
+            event.preventDefault(); //nextpage
+            window.location.href = "2nd.html";
+        });
+
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('emailError');
+
+        emailInput.addEventListener('input', function () {
+            const value = emailInput.value.toLowerCase();
+            emailInput.value = value;
+
+            if (!value.includes('@') || !value.includes('.com') && !value.includes('.in')) {
+                emailError.textContent = 'Please enter a valid email address';
+            } else {
+                emailError.textContent = '';
+            }
+        });
+        function updateNameFormat() {
+            const fullNameInput = document.getElementById('fullname');
+            const errorElement = document.getElementById('error');
+
+            const fullName = fullNameInput.value.trim();
+
+            if (fullName === '') {
+                errorElement.textContent = 'Full name is required.';
+                return;
+            }
+
+            // Check if the name contains any numbers
+            if (/\d/.test(fullName)) {
+                fullNameInput.value = fullName.replace(/\d/g, ''); // Remove any numbers
+                return;
+            }
+
+            const formattedName = formatFullName(fullName);
+            if (formattedName !== fullName) {
+                fullNameInput.value = formattedName;
+                errorElement.textContent = '';
+            } else {
+                errorElement.textContent = '';
+            }
+        }
+
+        function formatFullName(name) {
+            const parts = name.split(' ');
+            const formattedParts = parts.map(part => capitalizeFirstLetter(part));
+            return formattedParts.join(' ');
+        }
+
+        function capitalizeFirstLetter(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        const dobInput = document.getElementById('dob');
+
+        dobInput.addEventListener('focus', function () {
+            dobInput.type = 'date';
+        });
+
+        dobInput.addEventListener('blur', function () {
+            dobInput.type = 'text';
+        });
+
+        dobInput.addEventListener('change', function () {
+            validateDate();
+        });
+
+        function validateDate() {
+            const inputDate = dobInput.value.trim();
+
+            if (isValidDateFormat(inputDate)) {
+                const convertedDate = convertDateFormat(inputDate);
+                dobInput.value = convertedDate;
+            }
+        }
+
+        function isValidDateFormat(dateString) {
+            const pattern = /^\d{2}\/\d{2}\/\d{4}$/;
+            return pattern.test(dateString);
+        }
+
+        function convertDateFormat(dateString) {
+            const parts = dateString.split('/');
+            const day = parts[0].padStart(2, '0');
+            const month = parts[1].padStart(2, '0');
+            const year = parts[2];
+            return `${year}/${month}/${day}`;
+        }
+    </script>
+
+</body>
+
+</html>
